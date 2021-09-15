@@ -1,13 +1,27 @@
 package com.company.cards;
 
 
-public abstract class Card {
+public class Card {
+    private int value;
+    private String suit;
 
-    public static final String[] RANKS = {
-            "Ace", "2", "3", "4", "5", "6", "7",
-            "8", "9", "10", "Jack", "Queen", "King"};
+    public Card(int value, String suit) {
+        this.value = value;
+        this.suit = suit;
+    }
 
-    public static final String[] SUITS = {
-            "Clubs", "Diamonds", "Hearts", "Spades"
-    };
+    public int getValue() {return value;}
+
+    public String display() {
+        String output = "";
+        switch(value) {
+            case 1 -> output = "AC";
+            case 11 -> output = "JA";
+            case 12 -> output = "QU";
+            case 13 -> output = "KI";
+//            case 0 -> output = "JR"; //joker
+            default -> output = value == 10 ? Integer.toString(value) : " " + value;
+        }
+        return output + suit;
+    }
 }
