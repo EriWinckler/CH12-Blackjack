@@ -1,4 +1,4 @@
-package com.company.cards;
+package com.company.deck;
 
 import com.company.utils.Console;
 

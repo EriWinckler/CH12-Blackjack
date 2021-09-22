@@ -1,7 +1,4 @@
-package com.company.cardGame;
-
-import com.company.cards.Card;
-import com.company.cards.Deck;
+package com.company.deck;
 
 import java.util.*;
 
