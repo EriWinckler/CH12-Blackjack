@@ -8,6 +8,7 @@ import java.util.List;
 public class Hand {
     private List<Card> cards = new ArrayList<>();
     private int bet = 0;
+    private Actor holder; //user
     //private Player player;
 
     public void addCard(Card card) {
@@ -23,7 +24,7 @@ public class Hand {
         return output.toString().trim();
     }
 
-    public String displayValue() {
+    public int getValue() {
         int score = 0;
         boolean haveAce11 = false;
         for (Card card : cards) {
@@ -43,7 +44,6 @@ public class Hand {
                 haveAce11 = false;
             }
         }
-
-        return Integer.toString(score);
+        return score;
     }
 }
