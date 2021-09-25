@@ -8,8 +8,11 @@ import java.util.List;
 public class Hand {
     private List<Card> cards = new ArrayList<>();
     private int bet = 0;
-    private Actor holder; //user
-    //private Player player;
+    private Actor holder;
+
+    public Hand(Actor holder) {
+        this.holder = holder;
+    }
 
     public void addCard(Card card) {
         cards.add(card);
@@ -45,5 +48,9 @@ public class Hand {
             }
         }
         return score;
+    }
+
+    public byte getAction() {
+        return holder.getAction(this);
     }
 }

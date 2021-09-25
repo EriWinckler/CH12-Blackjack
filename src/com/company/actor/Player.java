@@ -12,15 +12,14 @@ public class Player implements Actor {
         this.name = name;
     }
 
+    //Overload
     public Player (String name, int startingBalance) {
         this.name = name;
         balance = startingBalance;
     }
 
     @Override
-    public String getName() {
-        return name
-    }
+    public String getName() { return name; }
 
     @Override
     public int getBalance() {

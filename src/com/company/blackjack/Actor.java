@@ -1,7 +1,5 @@
 package com.company.blackjack;
 
-import com.company.blackjack.Hand;
-
 public interface Actor {
     byte HIT = 1;
     byte STAND = 2;
