@@ -23,7 +23,6 @@ public class Hand {
         for (Card card : cards) {
             output.append(card.display()).append(" ");
         }
-
         return output.toString().trim();
     }
 
@@ -31,7 +30,7 @@ public class Hand {
         int score = 0;
         boolean haveAce11 = false;
         for (Card card : cards) {
-            int value = card.getValue();
+            int value = card.getRank();
             switch (value) {
                 case 1 -> {
                     value = score + 11 > 21 ? 1 : 11;
@@ -52,5 +51,14 @@ public class Hand {
 
     public byte getAction() {
         return holder.getAction(this);
+    }
+
+    //pass through method
+    public int size() { return cards.size(); };
+
+    public int getBet() { return bet; }
+
+    public boolean canSplit() {
+        return cards.get(0).getRank() == cards.get(1).getRank();
     }
 }

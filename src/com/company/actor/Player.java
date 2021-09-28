@@ -7,6 +7,7 @@ import com.company.utils.Console;
 public class Player implements Actor {
     private final String name;
     private int balance = 1000;
+    private int actionsCount;
 
     public Player(String name) {
         this.name = name;
@@ -36,13 +37,18 @@ public class Player implements Actor {
         );
     }
 
-    private String getAvailableActions() {
+    private String getAvailableActions(Hand hand) {
+        actionsCount = 2;
         StringBuilder output = new StringBuilder();
         output.append("0. Quit\n1. Hit\n2. Stand");
-        //TODO add logic for double
-        //TODO 1 - confirm first turn
-        //TODO 2 - confirm has enough funds
-        //TODO 3 - add logic for split detect pair
+        if(hand.size() == 2 && balance >= hand.getBet()) {
+            output.append("\n3. Double");
+            actionsCount++;
+            if(hand.canSplit()) {
+                output.append("\n4. Split");
+                actionsCount++;
+            }
+        }
         return output.toString();
     }
 
