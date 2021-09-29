@@ -1,6 +1,6 @@
-package com.company.blackjack;
+package com.company.cardGame.blackjack;
 
-import com.company.deck.Card;
+import com.company.cardGame.deck.Card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,5 +60,13 @@ public class Hand {
 
     public boolean canSplit() {
         return cards.get(0).getRank() == cards.get(1).getRank();
+    }
+
+    public void doubleBet() {
+        bet *= 2;
+    }
+
+    public void win() {
+
     }
 }

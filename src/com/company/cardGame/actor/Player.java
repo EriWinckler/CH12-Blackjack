@@ -1,7 +1,7 @@
-package com.company.actor;
+package com.company.cardGame.actor;
 
-import com.company.blackjack.Actor;
-import com.company.blackjack.Hand;
+import com.company.cardGame.blackjack.Actor;
+import com.company.cardGame.blackjack.Hand;
 import com.company.utils.Console;
 
 public class Player implements Actor {

@@ -1,4 +1,4 @@
-package com.company.deck;
+package com.company.cardGame.deck;
 
 public interface Deck {
     void shuffle();
