@@ -29,14 +29,18 @@ public class Table {
         while(playerCount > hands.size()) {
             Hand player = new Hand(new Player(Console.getString("Please enter player name", true)));
             hands.add(player);
-            System.out.println(player.getName());
         }
 
         for(Hand player : hands) {
             player.placeBet();
             deal();
             displayTable();
-
+            while(turn(player)) {}
+            System.out.println(player.displayHand());
+            while (turn(dealer));
+            displayTable();
+            determineWinner();
+            System.out.println(player.getBalance());
         }
 //        player.placeBet();
 //        deal();

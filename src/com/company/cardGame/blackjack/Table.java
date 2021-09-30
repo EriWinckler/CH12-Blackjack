@@ -49,7 +49,7 @@ public class Table {
             System.out.println("Player Wins");
             return;
         }
-        if(player.getValue() == dealer.getValue() {
+        if(player.getValue() == dealer.getValue()) {
             System.out.println("Push");
             return;
         }
