@@ -10,14 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Table {
-    // TODO: remove this item.
-    private Hand player = new Hand(new Player("player"));
-    // TODO: try to implement multiple hands.
     private List<Hand> hands = new ArrayList<>();
-    // TODO: more comfortable -> try to accomplish without the players list.
     private List<Actor> players = new ArrayList<>();
     private Hand dealer = new Hand(new Dealer());
     private Deck deck;
+    private int playerCount = 0;
     public static final int BUST_VALUE = 21;
 
     public Table() {
@@ -32,50 +29,50 @@ public class Table {
         }
     }
 
+    public void playGame() {
+        while(true) {
+            playRound();
+        }
+    }
+
     public void playRound() {
         deck = new StandardDeck();
+//        deck = new RiggedDeck();
         deck.shuffle();
-        for(Hand player : hands) {
-            player.placeBet();
-        }
+        getBets();
         deal();
         displayTable();
-        for(Hand player : hands) {
-            while(true) {
-                if(turn(player)) break;
+        playerTurns();
+        while (turn(dealer));
+        displayTable();
+        endRound();
+    }
+
+    private void getBets() {
+        for (Hand player : hands) {
+            player.placeBet();
+        }
+    }
+
+    private void playerTurns() {
+        for (int count = 0; count < hands.size(); count++) {
+            Hand player = hands.get(count);
+            while (true) {
+                if (!turn(player)) break;
             }
             System.out.println(player.displayHand());
-            Console.getString("Enter to start the next turn", false);
+            Console.getString("Enter to start next turn", false);
         }
+    }
 
-
-//        int playerCount = Console.getInt(1, 5, "How many players are playing?", "Invalid input");
-//
-//        while(playerCount > hands.size()) {
-//            Hand player = new Hand(new Player(Console.getString("Please enter player name", true)));
-//            hands.add(player);
-//        }
-//
-//        for(Hand player : hands) {
-//            player.placeBet();
-//            deal();
-//            displayTable();
-//            while(turn(player)) {}
-//            System.out.println(player.displayHand());
-//            while (turn(dealer));
-//            displayTable();
-//            determineWinner();
-//            System.out.println(player.getBalance());
-//        }
-//        player.placeBet();
-//        deal();
-//        displayTable();
-//        while(turn(player)) {}
-//        System.out.println(player.displayHand());
-//        while (turn(dealer));
-//        displayTable();
-//        determineWinner();
-//        System.out.println(player.getBalance());
+    public void endRound() {
+        for (Hand player : hands) {
+            determineWinner(player);
+            System.out.println(player.getBalance());
+        }
+        while ( hands.size() > playerCount) {
+            hands.remove(hands.size() - 1);
+        }
     }
 
     public void displayTable() {
@@ -97,7 +94,7 @@ public class Table {
         }
     }
 
-    private void determineWinner() {
+    private void determineWinner(Hand player) {
         if (player.getValue() > BUST_VALUE) {
             System.out.println("Player Busted");
             return;
@@ -119,13 +116,18 @@ public class Table {
         System.out.println(dealer.getName() + " " + dealer.displayHand());
         byte action = activeHand.getAction();
         return switch (action) {
-            case Actor.QUIT -> stand(activeHand);
+            case Actor.QUIT -> quit();
             case Actor.HIT -> hit(activeHand);
             case Actor.STAND -> stand(activeHand);
             case Actor.DOUBLE -> doubleDown(activeHand);
             case Actor.SPLIT -> split(activeHand);
             default -> false;
         };
+    }
+
+    private boolean quit() {
+        System.exit(0);
+        return false;
     }
 
     private boolean hit(Hand activeHand) {
@@ -151,6 +153,12 @@ public class Table {
     }
 
     private boolean split(Hand activeHand) {
-        return doubleDown(activeHand);
+        activeHand.doubleBet();
+        Hand newHand = activeHand.splitHand();
+        activeHand.addCard(deck.draw());
+        newHand.addCard(deck.draw());
+        hands.add(newHand);
+
+        return true;
     }
 }

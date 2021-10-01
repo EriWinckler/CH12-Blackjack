@@ -28,13 +28,15 @@ public class Player implements Actor {
     }
 
     @Override
-    public int getBet() {
-        return Console.getInt(
+    public int placeBet() {
+        int bet = Console.getInt(
                 1,
                 balance,
                 "Enter a bet value between 1 and " + balance,
                 "Invalid bet"
         );
+        balance -= bet;
+        return bet;
     }
 
     private String getAvailableActions(Hand hand) {
@@ -53,10 +55,14 @@ public class Player implements Actor {
     }
 
     @Override
-    public byte getAction(Hand hand) {
+    public byte getAction(Hand hand, Hand dealer) {
         System.out.println(hand.displayHand());
         System.out.println(hand.getValue());
         System.out.println("1 - hit \n2 - Stand \n3 - Quit");
         return (byte) Console.getInt(0,2, "", "Invalid action");
+    }
+
+    public void addBalance(double amt) {
+        balance += amt;
     }
 }
