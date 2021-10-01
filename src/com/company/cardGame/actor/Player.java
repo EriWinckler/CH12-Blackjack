@@ -62,6 +62,7 @@ public class Player implements Actor {
         return (byte) Console.getInt(0,2, "", "Invalid action");
     }
 
+    @Override
     public void addBalance(double amt) {
         balance += amt;
     }
