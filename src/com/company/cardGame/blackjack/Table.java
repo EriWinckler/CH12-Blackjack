@@ -1,6 +1,7 @@
 package com.company.cardGame.blackjack;
 
 import com.company.cardGame.actor.Dealer;
+import com.company.cardGame.actor.Glados;
 import com.company.cardGame.actor.Player;
 import com.company.cardGame.deck.Deck;
 import com.company.cardGame.deck.StandardDeck;
@@ -22,10 +23,17 @@ public class Table {
                 6,
                 "How many players are playing?",
                 "Invalid input");
+        String AI = Console.getString("Would you like to add GLaDOS to your game? (Y/N)", false);
         for (int i = 0; i < playerCount; i++) {
             Player newPlayer = new Player("Player ", (i + 1));
             players.add(newPlayer);
             hands.add(new Hand(newPlayer));
+        }
+        //adding AI
+        if(AI.equalsIgnoreCase("Y")) {
+            Glados glados = new Glados();
+            players.add(glados);
+            hands.add(new Hand(glados));
         }
     }
 
