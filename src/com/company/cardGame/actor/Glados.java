@@ -23,25 +23,47 @@ public class Glados implements Actor {
             bet = 100;
         }
         if(balance < 100) {
-            bet = 50;
-        }
-        if(balance < 50) {
-            bet = 10;
-        }
-        if(balance < 10) {
-            bet = 1;
+            bet = (int) Math.floor(Math.random() * balance / 2) + 1;
         }
         balance -= bet;
         return bet;
     }
 
+    /*
+    dealer menor que 16 = hit
+    dealer maior que 16 = stand
+
+    hand menor que 16 = hit
+    hand maior que 16 = stand
+
+     */
+
     @Override
     public byte getAction(Hand hand, Hand dealer) {
-        if(hand.getValue() < 16) {
-            return Actor.HIT;
+        int handValue = hand.getValue();
+        int dealerValue = dealer.getValue();
+
+        if(dealerValue >= 16 && handValue <= 16) {
+            return HIT;
         }
-        
-        return 0;
+
+        if(handValue >= 13) {
+            return STAND;
+        }
+
+        if(dealerValue < 16) {
+            return HIT;
+        }
+
+        if(dealerValue > 12 && dealerValue < 16) {
+            return DOUBLE;
+        }
+
+        if(hand.canSplit()) {
+            return SPLIT;
+        }
+
+        return HIT;
     }
 
     @Override
