@@ -37,6 +37,10 @@ public class Glados implements Actor {
 
     @Override
     public byte getAction(Hand hand, Hand dealer) {
+        if(hand.getValue() < 16) {
+            return Actor.HIT;
+        }
+        
         return 0;
     }
 
