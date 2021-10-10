@@ -13,27 +13,27 @@ public class Player implements Actor {
         this.name = name;
     }
 
-    //Overload
-    public Player (String name, int startingBalance) {
+    public Player(String name, int startingBalance) {
         this.name = name;
         balance = startingBalance;
     }
 
     @Override
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     @Override
     public int getBalance() {
-        return 0;
+        return balance;
     }
 
     @Override
     public int placeBet() {
         int bet = Console.getInt(
-                1,
+                "Enter a bet between 1 and " + balance, 1,
                 balance,
-                "Enter a bet value between 1 and " + balance,
-                "Invalid bet"
+                "invalid bet"
         );
         balance -= bet;
         return bet;
@@ -43,10 +43,10 @@ public class Player implements Actor {
         actionsCount = 2;
         StringBuilder output = new StringBuilder();
         output.append("0. Quit\n1. Hit\n2. Stand");
-        if(hand.size() == 2 && balance >= hand.getBet()) {
+        if (hand.size() == 2 && balance >= hand.getBet()) {
             output.append("\n3. Double");
             actionsCount++;
-            if(hand.canSplit()) {
+            if (hand.canSplit()) {
                 output.append("\n4. Split");
                 actionsCount++;
             }
@@ -55,14 +55,13 @@ public class Player implements Actor {
     }
 
     @Override
-    public byte getAction(Hand hand, Hand dealer) {
+    public byte getAction(Hand hand, int dealer) {
+        //display hand and value
         System.out.println(hand.displayHand());
         System.out.println(hand.getValue());
-        System.out.println("1 - hit \n2 - Stand \n3 - Quit");
-        return (byte) Console.getInt(0,2, "", "Invalid action");
+        return (byte) Console.getInt(getAvailableActions(hand), 0, actionsCount, "invalid action");
     }
 
-    @Override
     public void addBalance(double amt) {
         balance += amt;
     }

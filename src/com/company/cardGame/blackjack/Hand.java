@@ -53,8 +53,8 @@ public class Hand {
         return score;
     }
 
-    public byte getAction() {
-        return holder.getAction(this, this);
+    public byte getAction(int dealer) {
+        return holder.getAction(this, dealer);
     }
 
     //pass through method
@@ -94,5 +94,21 @@ public class Hand {
         hand.addCard(cards.remove(1));
         hand.bet = bet;
         return hand;
+    }
+
+    public void revealHand() {
+        for (Card card : cards) {
+            if (card.getIsFaceDown()) {
+                card.flip();
+            }
+        }
+    }
+
+    public void discardHand() {
+        cards.clear();
+    }
+
+    public int getShownRank() {
+        return cards.get(1).getRank();
     }
 }

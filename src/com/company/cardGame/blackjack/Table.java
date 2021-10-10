@@ -19,9 +19,9 @@ public class Table {
     public static final int BUST_VALUE = 21;
 
     public Table() {
-        int playerCount = Console.getInt(1,
+        int playerCount = Console.getInt("How many players are playing?",
                 6,
-                "How many players are playing?",
+                1,
                 "Invalid input");
         String AI = Console.getString("Would you like to add GLaDOS to your game? (Y/N)", false);
         for (int i = 0; i < playerCount; i++) {
@@ -93,12 +93,19 @@ public class Table {
     }
 
     private void deal() {
-        for(int count = 1; count < 2; count ++) {
-            //list of hands
+        for (int count = 0; count < 2; count++) {
+            // list of hands
+            dealer.addCard(count == 0 ? deck.draw() : deck.flipDraw());
             for (Hand player : hands) {
-                player.addCard(deck.draw());
+//                if (count == 0) {
+//                    player.addCard(deck.draw());
+//                } else {
+//                    Card card = deck.draw();
+//                    card.flip();
+//                    player.addCard(card);
+//                }
+                player.addCard(count == 0 ? deck.draw() : deck.flipDraw());
             }
-            dealer.addCard(deck.draw());
         }
     }
 
@@ -122,7 +129,7 @@ public class Table {
 
     private boolean turn(Hand activeHand) {
         System.out.println(dealer.getName() + " " + dealer.displayHand());
-        byte action = activeHand.getAction();
+        byte action = activeHand.getAction(dealer.getShownRank());
         return switch (action) {
             case Actor.QUIT -> quit();
             case Actor.HIT -> hit(activeHand);
